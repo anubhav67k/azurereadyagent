@@ -296,6 +296,7 @@ quantitative_retail_responses = [
 
 @app.get("/agent-answers")
 def get_agent_answers(domain: str = Query(...), scenario: str = Query(...)):
+    print(f"DEBUG: domain={domain}, scenario={scenario}")  # Debug print
     # Check for basic AI/general questions
     normalized = scenario.strip().lower()
     for triggers, resp in basic_ai_responses:
@@ -339,5 +340,5 @@ def get_agent_answers(domain: str = Query(...), scenario: str = Query(...)):
             agent_keys = list(insurance_agent_answers.values())[0].keys()
             msg = "I am currently running locally with FastAPI DB. Once I am integrated with AI Foundry, I will be able to answer everything."
             return {"answers": {k: msg for k in agent_keys}}
-    # Unknown domain: fallback
-    return {"answers": {}}
+    # Unknown domain or no match: fallback
+    return {"answers": {"message": "No matching scenario found for this domain."}}
