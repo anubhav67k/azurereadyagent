@@ -244,9 +244,6 @@ import re
 
 from fastapi.staticfiles import StaticFiles
 
-# Mount static files at the end, after all API routes
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
-
 def normalize_key(key: str) -> str:
     # Lowercase, strip, remove trailing punctuation, collapse whitespace
     return re.sub(r'\s+', ' ', key.strip().lower().rstrip('?.!'))
@@ -280,6 +277,7 @@ basic_ai_responses = [
 # - How can we improve sales of our underperforming products?
 # - What were the total returns last month?
 # - What strategies can we implement to boost sales this quarter?
+
 
 quantitative_retail_responses = [
     (['total sales last month'], "Last month, our total sales reached $150,000, showing a significant increase compared to previous months."),
@@ -342,3 +340,6 @@ def get_agent_answers(domain: str = Query(...), scenario: str = Query(...)):
             return {"answers": {k: msg for k in agent_keys}}
     # Unknown domain or no match: fallback
     return {"answers": {"message": "No matching scenario found for this domain."}}
+
+    # Mount static files at the VERY END, after all API routes and functions
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
