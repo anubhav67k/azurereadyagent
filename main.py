@@ -243,6 +243,8 @@ retail_agent_answers = {
 import re
 
 from fastapi.staticfiles import StaticFiles
+
+# Mount static files at the end, after all API routes
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 def normalize_key(key: str) -> str:
