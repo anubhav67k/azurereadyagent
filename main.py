@@ -242,6 +242,9 @@ retail_agent_answers = {
 
 import re
 
+from fastapi.staticfiles import StaticFiles
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
+
 def normalize_key(key: str) -> str:
     # Lowercase, strip, remove trailing punctuation, collapse whitespace
     return re.sub(r'\s+', ' ', key.strip().lower().rstrip('?.!'))

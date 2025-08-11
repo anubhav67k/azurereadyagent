@@ -1,3 +1,0 @@
-fastapi
-uvicorn
-(any other packages you use)
