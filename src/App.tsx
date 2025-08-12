@@ -173,13 +173,15 @@ function App() {
   const suggestionDetails = domain === 'retail' ? retailSuggestionDetails : insuranceSuggestionDetails;
 
   // Fetch agent answers from FastAPI backend
+  const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+
   const fetchAgentAnswers = async (domain: string, scenario: string) => {
     if (!scenario.trim()) {
       setAgentAnswers({});
       return;
     }
     try {
-      const res = await fetch(`http://127.0.0.1:8080/agent-answers?domain=${domain}&scenario=${encodeURIComponent(scenario)}`);
+      const res = await fetch(`${API_BASE_URL}/agent-answers?domain=${domain}&scenario=${encodeURIComponent(scenario)}`);
       const data = await res.json();
       setAgentAnswers(data.answers || {});
     } catch (err) {
